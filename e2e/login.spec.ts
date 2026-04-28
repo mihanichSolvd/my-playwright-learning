@@ -28,3 +28,5 @@ test.describe("Login functionality", () => {
     await expect(page.locator('#error')).toHaveText("Your username is invalid!");
   });
 });
+
+/// assume some changes done
