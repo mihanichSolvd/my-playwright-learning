@@ -13,5 +13,5 @@
       "@helpers/*": ["src/helpers/*"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts", "e2e/login.spec.ts", "e2e/example.spec.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts", "tests/login.spec.ts", "tests/example.spec.ts"]
 }
