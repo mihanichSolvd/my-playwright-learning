@@ -6,4 +6,5 @@ test('Negative login test for locked_out_user', async ({ page }) => {
   await page.locator('[data-test="password"]').fill('secret_sauce');
   await page.locator('[data-test="login-button"]').click();
   await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Sorry, this user has been locked out.');
+  //this is conflict
 });
