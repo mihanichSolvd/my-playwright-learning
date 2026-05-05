@@ -4,6 +4,7 @@ test-results/
 .env
 .claude
 CLAUDE.md
+package-lock.json
 
 # Playwright
 /playwright-report/
