@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Example', () => {
-  test('has title', async ({ page }) => {
+  test('page has titles', async ({ page }) => {
     await page.goto('https://practicetestautomation.com/practice-test-login/');
-    page.getByRole("link", { name: "Practice Test Automation", exact: true });
-    page.getByRole("link", { name: "Home" });
-    page.getByRole("link", { name: "Blog" });
-    page.getByText("Test login", {exact: true});
-    page.getByText('student').nth(1);
-    page.getByText('Password123').first();
-    page.getByText("Username", {exact: true});
-    page.getByRole("textbox", { name : 'Username' } );
-    page.getByText("Password", {exact: true});
-    page.getByRole("textbox", { name : 'Password' } );
-    page.getByRole("button", { name : 'Submit' } );
+    await expect(page.getByRole('link', { name: 'Practice Test Automation', exact: true })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Blog' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Test login' })).toBeVisible();
+    await expect(page.getByText('student').nth(1)).toBeVisible();
+    await expect(page.getByText('Password123').first()).toBeVisible();
+    await expect(page.getByText('Username', { exact: true })).toBeVisible();
+    await expect(page.getByText('Password', { exact: true })).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'Username' })).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
   });
 });

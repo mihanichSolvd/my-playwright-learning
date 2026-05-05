@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Login functionality", () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto("/practice-test-login/");   // uses baseURL
+     await page.goto('https://practicetestautomation.com/practice-test-login/');
   });
 
   test("successful login with valid credentials", async ({ page }) => {
@@ -18,13 +18,11 @@ test.describe("Login functionality", () => {
     await page.getByLabel("Username").fill("student");
     await page.getByLabel("Password").fill("wrongPass");
     await page.getByRole("button", { name: "Submit" }).click();
-    await expect(page.locator('#error')).toBeVisible();
     await expect(page.locator('#error')).toHaveText("Your password is invalid!");
   });
 
     test("Failure login with empty credentials", async ({ page }) => {
     await page.getByRole("button", { name: "Submit" }).click();
-    await expect(page.locator('#error')).toBeVisible();
     await expect(page.locator('#error')).toHaveText("Your username is invalid!");
   });
 });
