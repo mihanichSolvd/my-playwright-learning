@@ -1,28 +1,32 @@
 import { test, expect } from "@playwright/test";
+import { LoginPage } from "./pages/LoginPage";
+import { Users } from "../test-data/users";
 
-test.describe("Login functionality", () => {
+test.describe("Login", () => {
+  let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
-     await page.goto('https://practicetestautomation.com/practice-test-login/');
+    loginPage = new LoginPage(page);
+    await loginPage.open();
   });
 
-  test("successful login with valid credentials", async ({ page }) => {
-    await page.getByLabel("Username").fill("student");
-    await page.getByLabel("Password").fill("Password123");
-    await page.getByRole("button", { name: "Submit" }).click();
-    await expect(page).toHaveURL(/.*logged-in-successfully/);
-    await expect(page.getByRole("heading", { name: /Logged In Successfully/ })).toBeVisible();
+  test("standard user can log in", async ({ page }) => {
+    await loginPage.login(Users.standard.username, Users.standard.password);
+    await expect(page).toHaveURL(/inventory/);
   });
 
-  test("Failure login with invalid credentials", async ({ page }) => {
-    await page.getByLabel("Username").fill("student");
-    await page.getByLabel("Password").fill("wrongPass");
-    await page.getByRole("button", { name: "Submit" }).click();
-    await expect(page.locator('#error')).toHaveText("Your password is invalid!");
+  test("locked user sees error message", async () => {
+    await loginPage.login(Users.locked.username, Users.locked.password);
+    await expect(loginPage.errorMessage).toContainText("Sorry, this user has been locked out.");
   });
 
-    test("Failure login with empty credentials", async ({ page }) => {
-    await page.getByRole("button", { name: "Submit" }).click();
-    await expect(page.locator('#error')).toHaveText("Your username is invalid!");
+  test("wrong password shows error message", async () => {
+    await loginPage.login(Users.wrongPassword.username, Users.wrongPassword.password);
+    await expect(loginPage.errorMessage).toContainText("Username and password do not match any user in this service");
+  });
+
+  test("empty username shows validation error", async () => {
+    await loginPage.login("", Users.standard.password);
+    await expect(loginPage.errorMessage).toContainText("Username is required");
   });
 });
